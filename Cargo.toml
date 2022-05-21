@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 ignite-rs = "0.1.1"
+ignite-rs_derive = "0.1.0"

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  ignite:
+    image: apacheignite/ignite:2.13.0
+    environment:
+      - CONFIG_URI=/config-file.xml
+    volumes:
+      - ${PWD}/src/main/resources/config-file.xml:/config-file.xml
+    ports:
+      - "10800:10800"
+        
