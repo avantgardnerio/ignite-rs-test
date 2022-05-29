@@ -1,23 +1,30 @@
+use std::any::Any;
+use std::borrow::Borrow;
 use ignite_rs::{ClientConfig, Ignite};
 use ignite_rs::cache::Cache;
 
 use ignite_rs_derive::IgniteObj;
 
 fn main() {
-    // Create a client configuration
     let client_config = ClientConfig::new("localhost:10800");
-
-    // Optionally define user, password, TCP configuration
-    // client_config.username = Some("ignite".into());
-    // client_config.password = Some("ignite".into());
-
-    // Create an actual client. The protocol handshake is done here
     let mut ignite = ignite_rs::new_client(client_config).unwrap();
-
-    // Get a list of present caches
-    if let Ok(names) = ignite.get_cache_names() {
-        println!("ALL caches: {:?}", names)
+    let names = ignite.get_cache_names().unwrap();
+    for name in names.iter() {
+        println!("Got: {}", name);
+        let cfg = ignite.get_cache_config(name);
+        let cfg = cfg.unwrap();
+        let entities = cfg.query_entities.unwrap();
+        for entity in entities.iter() {
+            println!("entity {:?}", entity.table);
+            for field in entity.query_fields.iter() {
+                println!("   field {} {}", field.name, field.type_name)
+            }
+        }
     }
+
+    // let region: Cache<i64, BinaryObject>  = ignite.get_or_create_cache("SQL_PUBLIC_REGION").unwrap();
+    // let res = region.get(&0i64).unwrap();
+    // ignite.get_binary_type();
 
     // Create a typed cache named "test"
     let hello_cache: Cache<MyType, MyOtherType> = ignite

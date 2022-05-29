@@ -6,5 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-ignite-rs = "0.1.1"
+ignite-rs = { path = "../ignite-rs/ignite-rs" }
 ignite-rs_derive = "0.1.0"
