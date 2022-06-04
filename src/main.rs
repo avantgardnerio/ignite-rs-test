@@ -43,6 +43,11 @@ fn main() {
     // Put value
     hello_cache.put(&key, &val).unwrap();
 
+    let records = hello_cache.query_scan(1024).unwrap();
+    for record in records {
+        println!("{:?}={:?}", record.0, record.1);
+    } 
+
     // Retrieve value
     println!("{:?}", hello_cache.get(&key).unwrap());
 }
